@@ -1,0 +1,30 @@
+<div class="row todo-top">
+  <div class="form-group">
+    <div class="col-xs-12 col-md-6">
+      <input #taskName type="text" placeholder="Description" class="form-control">
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <button (click)="addTask(taskName)" class="btn btn-primary text-uppercase">Add Task</button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="form-group">
+    <div class="col-xs-12">
+      <ul class="todo-list">
+        <li class="form-group" *ngFor="let task of todo.tasks">
+         <div class="checkbox-inline">
+             <label class="todo-text" [ngClass]="{'line-through': task.checked}">
+             <input type="checkbox" [checked]="task.checked" (change)="updateTasks(task, $event)">
+             {{ task.text }}
+             </label>
+          </div>
+          <span class="todo-delete" (click)="deleteTask(task)">Delete</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="form-group" *ngIf="!todo.tasks.length">You have no tasks...</div>
+</div>

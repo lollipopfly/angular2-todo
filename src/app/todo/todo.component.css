@@ -1,0 +1,18 @@
+.todo-top {
+  margin-bottom: 50px;
+}
+.todo-list {
+  padding-left: 0;
+  list-style-type: none;
+}
+.todo-text {
+  font-size: 16px;
+}
+.todo-delete {
+  text-decoration: underline;
+  color: #337ab7;
+  cursor: pointer;
+}
+.line-through {
+  text-decoration: line-through;
+}
