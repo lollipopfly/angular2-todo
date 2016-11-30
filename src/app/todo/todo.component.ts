@@ -17,45 +17,36 @@ export class TodoComponent implements OnInit {
   }
 
   addTask(input) {
-    if (typeof(Storage) != "undefined" && input.value != '') {
+    if(input.value === '') return;
 
-      var task = {
-        "id": this.getUniqueId(),
-        'text': input.value,
-        'checked': false
-      };
+    var task = {
+      "id": new Date().getUTCMilliseconds(),
+      'text': input.value,
+      'checked': false
+    };
 
-      this.todo.tasks.push(task);
-      this.stringifyAndUpdate();
-      input.value = ''
-    } else {
-      console.log('Sorry, LocalStorage not working in this browser!');
-    }
+    this.todo.saveTask(task);
+    this.saveTask();
+    input.value = ''
   }
 
   updateTasks(task, event) {
     if (typeof(Storage) != "undefined") {
       task.checked = event.target.checked
 
-      this.stringifyAndUpdate();
+      this.saveTask();
     }
   }
 
   deleteTask(task) {
-    this.todo.tasks = this.todo.tasks.filter(function(item) {
-      return task.id != item.id;
-    });
-    this.stringifyAndUpdate();
+    this.todo.removeTask(task);
+
+    this.saveTask();
   }
 
-  stringifyAndUpdate() {
+  saveTask() {
     var stringifyTasks = JSON.stringify(this.todo.tasks)
     localStorage.setItem('tasks', stringifyTasks)
-  }
-
-  getUniqueId() {
-    var uniqueId = new Date().getUTCMilliseconds();
-    return uniqueId;
   }
 
   ngOnInit() {
